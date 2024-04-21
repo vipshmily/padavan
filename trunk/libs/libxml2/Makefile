@@ -1,11 +1,11 @@
 include $(ROOTDIR)/rules.mk
 
 PKG_NAME:=libxml2
-PKG_VERSION:=2.11.4
+PKG_VERSION:=2.12.6
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@GNOME/libxml2/$(basename $(PKG_VERSION))
-PKG_HASH:=737e1d7f8ab3f139729ca13a2494fd17bf30ddb4b7a427cf336252cab57f57f7
+PKG_HASH:=889c593a881a3db5fdd96cc9318c87df34eb648edfc458272ad46fd607353fbb
 
 include $(INCLUDE_DIR)/package.mk
 
