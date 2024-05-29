@@ -1,26 +1,20 @@
-PROG        = usb_modeswitch
-VERS        = 2.6.0
-CC          ?= gcc
-CFLAGS     += -I$(STAGEDIR)/include/libusb-1.0
-CFLAGS     += -Wall -ffunction-sections -fdata-sections -fvisibility=hidden
-LDFLAGS    += -Wl,--gc-sections
-LIBS        = -lusb-1.0
-RM          = /bin/rm -f
-OBJS        = usb_modeswitch.c
-PREFIX      = $(DESTDIR)/usr
-ETCDIR      = $(DESTDIR)/etc
-UDEVDIR     = $(DESTDIR)/lib/udev
-SBINDIR     = $(PREFIX)/sbin
+SRC_NAME = usb-modeswitch
 
-all: $(PROG)
+THISDIR = $(shell pwd)
 
-$(PROG): $(OBJS) usb_modeswitch.h
-	$(CC) -o $(PROG) $(OBJS) $(CFLAGS) $(LIBS) $(LDFLAGS)
+all: extract_test
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
+
+extract_test:
+	( if [ ! -d $(THISDIR)/$(SRC_NAME) ]; then \
+		tar xf $(SRC_NAME).tar.xz; \
+	fi )
 
 clean:
-	-rm -f $(PROG) *.o
+	if [ -f $(SRC_NAME)/Makefile ] ; then \
+		$(MAKE) -C $(SRC_NAME) clean ; \
+	fi ; \
+	rm -f config_done
 
 romfs:
-	$(ROMFSINST) /bin/$(PROG)
-	cp -rf usb_modeswitch.d $(ROMFSDIR)/etc_ro
-
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/usb-modeswitch /usr/bin/usb-modeswitch
