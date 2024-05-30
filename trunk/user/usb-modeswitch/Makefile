@@ -17,4 +17,4 @@ clean:
 	rm -f config_done
 
 romfs:
-	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/usb-modeswitch /usr/bin/usb-modeswitch
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME) /usr/bin/usb-modeswitch

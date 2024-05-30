@@ -2,8 +2,10 @@ name: build toolchain
 
 on:
   workflow_dispatch:
+
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -12,17 +14,18 @@ jobs:
       - uses: actions/checkout@main
       - name: Prepare environment
         run: |
-          sudo apt-get update && sudo apt-get install -y unzip libtool-bin ccache curl cmake gperf gawk flex bison nano xxd \
+            sudo apt-get update && sudo apt-get install -y unzip libtool-bin ccache curl cmake gperf gawk flex bison nano xxd \
             fakeroot kmod cpio bc zip git python3-docutils gettext automake autopoint \
             texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
             libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
       - name: Build toolchain
         run: |
-          make CT_TARGET=${CT_TARGET}
-          cd toolchain-mipsel
-          tar cJf ../${CT_TARGET}.tar.xz *
+          make CT_TARGET=${CT_TARGET} CT_VERSION=${CT_VERSION}
+          cd crosstool-ng-${CT_VERSION}/toolchain-mipsel
+          tar cJf ../../${CT_TARGET}.tar.xz *
         env:
           CT_TARGET: ${{ matrix.target }}
+          CT_VERSION: 1.26.0
         working-directory: toolchain
       - uses: actions/upload-artifact@main
         with:

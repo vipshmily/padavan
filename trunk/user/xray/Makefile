@@ -19,7 +19,7 @@ define Build/Compile
 		sed -i "s/go 1.22/go 1.22.3/g" ./go.mod; \
 		GOOS=linux GOARCH=mipsle CGO_ENABLED=0 \
 		go build -v -o xray \
-		-trimpath -ldflags "-s -w -buildid=" \
+		-trimpath -gcflags=all="-l" -ldflags "-w -s -buildid=" \
 		./main; \
 	)
 endef
