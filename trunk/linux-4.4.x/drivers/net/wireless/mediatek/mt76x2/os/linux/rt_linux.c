@@ -856,7 +856,6 @@ void RtmpOSFileSeek(RTMP_OS_FD osfd, int offset)
 
 int RtmpOSFileRead(RTMP_OS_FD osfd, char *pDataPtr, int readLen)
 {
-
 	/* The object must have a read method */
 #if (KERNEL_VERSION(3, 19, 0) > LINUX_VERSION_CODE)
 	if (osfd->f_op && osfd->f_op->read) {
@@ -867,7 +866,6 @@ int RtmpOSFileRead(RTMP_OS_FD osfd, char *pDataPtr, int readLen)
 		return __vfs_read(osfd, pDataPtr, readLen, &osfd->f_pos);
 #endif
 	} else {
-		
 		return -1;
 	}
 }
