@@ -5,7 +5,7 @@
 #nvram set ntp_ready=0
 
 mkdir -p /tmp/dnsmasq.dom
-logger -t "为防止dnsmasq启动失败，创建/tmp/dnsmasq.dom/"
+logger -t "防止 DNSmasq 启动失败，创建/tmp/dnsmasq.dom/"
 
 # ap relay monitor [simonchen]
 if [ ! -x /etc/storage/sh_ezscript.sh ]; then
@@ -46,13 +46,13 @@ sleep 20
 fi
 
 if [ $(nvram get sqm_enable) = 1 ] ; then
-sleep 30
+sleep 10
 logger -t "自动启动" "正在启动 SQM QOS..."
 /usr/lib/sqm/run.sh
 fi
 
 if [ $(nvram get adbyby_enable) = 1 ] ; then
-logger -t "自动启动" "正在启动 Adbyby plus+..."
+logger -t "自动启动" "正在启动 Adbyby plus..."
 /usr/bin/adbyby.sh start
 fi
 
@@ -105,6 +105,6 @@ logger -t "自动启动" "正在启动 wireguard..."
 fi
 
 if [ $(nvram get frpc_enable) = 1 ] ; then
-logger -t "自动启动" "正在启动 frp client..."
+logger -t "自动启动" "正在启动frp client..."
 /usr/bin/frp.sh start
 fi
